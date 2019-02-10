@@ -1,3 +1,21 @@
+/* API WebConference
+----REQUEST ---------------------------------ENDPOINT---------------------------
+                            /
+autentication               /  POST signin
+participants register       /  POST conferences/1/participants/{email}
+speaker btnRegister         /  POST speakers
+connect speaker             /  POST conferences/1/speakers/{speakerId}
+up-to-date speaker          /  PUT  conferences/1/speakers/{speakerId}
+get speakers                /  GET  conferences/1/speakers
+remove speaker              /  DELETE conferences/1/speakers/{speakerId}
+get sponsors                /  GET conferences/1/sponsors
+send message                /  POST contacts/emails
+                            /
+###############################################################################
+*/
+
+
+
 //onload event to execute all code when HTML content is ready in memory to be render
 window.onload = function() {
   const urlBase = "https://fcawebbook.herokuapp.com";
@@ -64,15 +82,15 @@ window.onload = function() {
 ( async () => {
   const renderSpeakers = document.getElementById("renderSpeakers");
   let txtSpeakers = "";
-  let response = await fetch(`${urlBase}/conferences/1/speakers`)
+  let response = await fetch(`${urlBase}/conferences/1/speakers`) //1- means the numeric id of WebConference in data base
   let speakers = await response.json();
   console.log('speakers2: ', speakers);
 
-  for(const speaker of Object.keys(speakers)) {
+  for(const speaker of speakers) {
     txtSpeakers += `
     <div class="col-sm-4">
       <div class="team-member">
-        <img id="${speaker.idSpeaker}" class="mx-auto rounded-circle viewSpeaker" src="${speaker.photo}" alt="">
+        <img id="${speaker.idSpeaker}" class="mx-auto rounded-circle viewSpeaker" src="${speaker.photo}" alt="${speaker.name}">
         <h4>${speaker.name}</h4>
         <p class="text-muted">${speaker.role}</p>
         <ul class="list-inline social-buttons">`
@@ -86,7 +104,6 @@ window.onload = function() {
           </a>
         </li>`
       }
-
 
       if(speaker.facebook !== null) {
         txtSpeakers += `
@@ -133,7 +150,54 @@ window.onload = function() {
       }
     }
     renderSpeakers.innerHTML = txtSpeakers;
-}) ()
+}) ();
 
+
+/*
+  Get sponsors from server
+*/
+( async () => {
+  const renderSponsors = document.getElementById("renderSponsors");
+  let txtSponsors = "";
+  const response = await fetch(`${urlBase}/conferences/1/sponsors`);
+  const sponsors = await response.json();
+  console.log('sponsors: ', sponsors);
+
+  for (const sponsor of sponsors) {
+    txtSponsors += `
+    <div class="col-md-3 col-sm-6">
+      <a href="#" target="_blank">
+        <img class="img-fluid d-block mx-auto" src="${sponsor.logo}" alt="${sponsor.nome}">
+      </a>
+    </div>`
+  }
+  renderSponsors.innerHTML = txtSponsors
+}) ();
+
+
+/*
+  Post user messages to the server
+*/
+  const contactForm = document.getElementById("contactForm");
+  contactForm.addEventListener("submit", async () => {
+    const name = document.getElementById("name")
+    const email = document.getElementById("email")
+    const subject = document.getElementById("subject")
+    const response = await fetch(`${urlBase}/conferences/1/contacts/emails`, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      method: "POST",
+      body: `email=${email}&name=${name}&subject=${subject}`
+    })
+    const result = await response.json()
+
+    if(result.value.success) {
+      swal('Message sending', result.value.message.eng, 'success')
+    } else {
+      //display modal error
+      console.log('Erros sending message');
+    }
+  })
 
 }

@@ -178,20 +178,79 @@
         </div>
       </div>
     </section>
-
+    <!--###########################  SPEAKERS  ##############################-->
     <section id="speakers">
       <!--informations about the conference speakers-->
       <!-- will be dinamic-->
       <div class="row" id="renderSpeakers">
+        <!--content will be injected by javascript-->
+      </div>
+    </section>
+
+
+    <!--###########################  SPONSORS  ##############################-->
+    <section id="sponsors">
+      <!--informations about the conference sponsors-->
+      <div class="row" id="renderSponsors">
+        <!--content will be injected by javascript-->
+      </div>
+    </section>
+
+
+    <!--###########################  CONTACTS  ##############################-->
+    <!--##USER CAN SEND MESSAGES OF DOUBTS-->
+    <!--##DISPLAY A MAP WITH INFORMATION RELATED TO THE PLACE OF THE CONFERENCE-->
+    <section id="contacts">
+      <!--form to contacts and maps-->
+      <div class="row">
+        <div class="col-lg-12">
+          <form id="contactForm" name="sendMessage">
+            <div class="row">
+              <div class="col-md-6">
+                <!--name field-->
+                <div class="form-group">
+                  <input id="name" type="text" clas="form-control" placeholder="Your name" required>
+                </div>
+
+                <!--e-mail field-->
+                <div class="form-group">
+                  <input id="email" type="text" clas="form-control" placeholder="Your email" required>
+                </div>
+
+                <!--phone field-->
+                <div class="form-group">
+                  <input id="phone" type="text" clas="form-control" placeholder="Your phone" required>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <!--message field-->
+                <div class="form-group">
+                  <input id="message" type="text" clas="form-control" placeholder="Your message" required>
+                </div>
+              </div>
+
+              <div class="col-lg-12 text-center">
+                <!--button to submit message-->
+                <div class="col-lg-12 text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-xl text-uppercase"
+                    id="sendMessageButton">
+                    Send Message
+                    </button>
+                </div>
+              </div>
+              
+            </div>
+          </form>
+        </div>
 
       </div>
     </section>
-    <section id="sponsors">
-      <!--informations about the conference sponsors-->
-    </section>
-    <section id="contacts">
-      <!--form to contacts and maps-->
-    </section>
+
+
+    <!--###########################  FOOTER  ##############################-->
     <footer>
       <!--links to social media and copyright-->
     </footer>
