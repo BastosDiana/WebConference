@@ -6,6 +6,7 @@ window.onload = function() {
   const btnRegister = document.getElementById("btnRegister");
   btnRegister.addEventListener("click", function() {
     console.log('estou aqui: ');
+
     //swal is't a method form library sweetalert2
     //html it's the code tobe rendering inside the modal
     swal({
@@ -63,14 +64,15 @@ window.onload = function() {
 ( async () => {
   const renderSpeakers = document.getElementById("renderSpeakers");
   let txtSpeakers = "";
-  let response = await fetch(`${urlBase}/conference/1/speakers`);
+  let response = await fetch(`${urlBase}/conferences/1/speakers`)
   let speakers = await response.json();
+  console.log('speakers2: ', speakers);
 
-  for(const speaker of speakers) {
+  for(const speaker of Object.keys(speakers)) {
     txtSpeakers += `
     <div class="col-sm-4">
       <div class="team-member">
-        <img class="mx-auto rounded-circle" src="${speaker.photo}" alt="">
+        <img id="${speaker.idSpeaker}" class="mx-auto rounded-circle viewSpeaker" src="${speaker.photo}" alt="">
         <h4>${speaker.name}</h4>
         <p class="text-muted">${speaker.role}</p>
         <ul class="list-inline social-buttons">`
@@ -108,6 +110,27 @@ window.onload = function() {
               </ul>
           </div>
       </div>`
+
+  // Manage click on image to show modal
+      const btnView = document.getElementsByClassName("viewSpeaker")
+      for(let i = 0; i < btnView.length; i++) {
+        btnView[i].addEventListener("click", () => {
+          for(const speaker of speakers) {
+            if(speaker.idSpeaker == btnView[i].getAttribute("id")) {
+              //Modal window
+              swal({
+                title: speaker.name,
+                text: speaker.bio,
+                imageUrl: speaker.photo,
+                imageWidth: 400,
+                imageHeight: 400,
+                imageAlt: 'speaker photo',
+                animation: false
+              })
+            }
+          }
+        })
+      }
     }
     renderSpeakers.innerHTML = txtSpeakers;
 }) ()
