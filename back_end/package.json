@@ -1,0 +1,12 @@
+{
+  "name": "back_end",
+  "version": "1.0.0",
+  "description": "web conference - pet project",
+  "main": "loader.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Diana Bastos",
+  "license": "ISC"
+}
