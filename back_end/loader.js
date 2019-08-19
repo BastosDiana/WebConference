@@ -14,7 +14,7 @@ const expressSanitizer = require('express-sanitizer');
 //validator use body-parser to access data
 const bodyParser = require('body-parser');
 //express-validator - validate on servar side
-const expressValidator = require('express-validator');
+// const expressValidator = require('express-validator'); //TODO:descomentar
 
 /* create a connection to models folder*/
 const models = require('./models/');
@@ -34,7 +34,7 @@ app.use(session({
     httpOnly: true,
   }
 }));
-app.use(expressValidator());
+// app.use(expressValidator()); //TODO: descomentar
 
 //to be possible to use the session, it must be associated with a global variable
 app.use( function(req, res, next) {
